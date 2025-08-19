@@ -1,0 +1,76 @@
+<!-- 난이도 설정-->
+<!doctype html> 
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tetris</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <!-- MENU -->
+    <div id="menu-screen" class="screen">
+      <h1>TETRIS</h1>
+      <div class="menu-buttons">
+        <button id="btn-play">시작</button>
+        <button id="btn-settings">설정</button>
+      </div>
+    </div>
+
+    <!-- SETTINGS -->
+    <div id="settings-screen" class="screen" style="display:none;">
+      <h2>조작키 설정</h2>
+      <div id="bindings-list"></div>
+      <div style="margin-top:12px;">
+        <button id="btn-settings-back">뒤로가기</button>
+      </div>
+      <p class="hint">해당 조작을 클릭하고 조작키를 입력</p>
+    </div>
+
+    <!-- GAME -->
+    <div id="game-screen" class="screen" style="display:none;">
+      <div id="game-area">
+        <!-- 왼쪽 패널: HOLD + STATS -->
+        <aside id="left-panel">
+          <div class="panel">
+            <div class="panel-title">HOLD</div>
+            <canvas id="holdCanvas" width="120" height="120"></canvas>
+          </div>
+          <div class="panel stats">
+            <div class="stat"><span>TIME</span><div id="stat-time">0.000</div></div>
+            <div class="stat"><span>PIECES</span><div id="stat-pieces">0</div></div>
+            <div class="stat"><span>LINES</span><div id="stat-lines">0</div></div>
+            <div class="stat"><span>T-SPIN</span><div id="stat-t">0</div></div>
+            <div class="stat"><span>PERFECT</span><div id="stat-perfect">0</div></div>
+            <div style="margin-top:8px;"><button id="btn-back-menu">Menu</button></div>
+          </div>
+        </aside>
+
+        <!-- 메인 게임판 -->
+        <canvas id="mainCanvas" width="256" height="496"></canvas>
+
+        <!-- 오른쪽 패널 -->
+        <aside id="right-panel">
+          <div class="panel">
+            <div class="panel-title">NEXT</div>
+            <div id="next-list">
+              <canvas class="nextCanvas" id="next0" width="120" height="120"></canvas>
+              <canvas class="nextCanvas" id="next1" width="120" height="120"></canvas>
+              <canvas class="nextCanvas" id="next2" width="120" height="120"></canvas>
+              <canvas class="nextCanvas" id="next3" width="120" height="120"></canvas>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+
+  <!-- 호출 -->
+  <script src="js/piece.js"></script>
+  <script src="js/input.js"></script>
+  <script src="js/game.js"></script>
+  <script src="js/render.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
