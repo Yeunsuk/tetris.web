@@ -97,3 +97,13 @@ const SRS_KICKS = {
     ]
   }
 };
+
+const gameSettings = {
+  gravityAccel: true,
+  initGravity: 1,
+  ShowNext: true,
+  ShowHold: true,
+  mode: '기본'
+};
+
+const modes = ['기본','스프린트','투명'];

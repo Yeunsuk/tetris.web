@@ -17,7 +17,7 @@ let waitingBind = null;
 let dasTimer = 0;   // das 측정
 let arrTimer = 0;   // arr 측정
 const DAS = 5;    // 최초 딜레이(ms)
-const ARR = 30;     // 반복 딜레이(ms)
+const ARR = 40;     // 반복 딜레이(ms)
 
 // 조작키 설정
 window.addEventListener('keydown', (e) => {
@@ -41,9 +41,15 @@ window.addEventListener('keyup', (e) => {
   keysPressed[e.key] = false;
 });
 
+
+
 // 조작키 UI
 function renderBindings(container) {
-  container.innerHTML = ''; // 기존 내용 초기화
+  const bindingsContainer = document.getElementById('bindings-list');
+  const settingsContainer = document.getElementById('settings-list');
+  bindingsContainer.innerHTML = '';
+  settingsContainer.innerHTML = ''; // 기존 내용 초기화
+
   const order = ['왼쪽','오른쪽','아래','하드드롭','회전R','회전L','회전180','홀드'];
 
   // 각 기능에 바인딩 UI 생성
@@ -68,8 +74,75 @@ function renderBindings(container) {
       waitingBind = { action, element: div };
     });
     
-    container.appendChild(div);
+    bindingsContainer.appendChild(div);
   });
+
+  // --- 추가 설정 영역 ---
+  const settingsDiv = document.createElement('div');
+  settingsDiv.className = 'settings';
+
+  // Helper 함수: 토글
+  function addToggle(label, key) {
+    const div = document.createElement('div');
+    div.className = 'setting';
+
+    const lbl = document.createElement('div');
+    lbl.textContent = label;
+
+    const btn = document.createElement('button');
+    btn.textContent = gameSettings[key] ? 'ON' : 'OFF';
+    btn.addEventListener('click', () => {
+      gameSettings[key] = !gameSettings[key];
+      btn.textContent = gameSettings[key] ? 'ON' : 'OFF';
+    });
+
+    div.appendChild(lbl);
+    div.appendChild(btn);
+    settingsDiv.appendChild(div);
+  }
+
+  // Helper 함수: 다중 값 선택 (좌/우 버튼)
+  function addSelector(label, key, values) {
+    const div = document.createElement('div');
+    div.className = 'setting';
+
+    const lbl = document.createElement('div');
+    lbl.textContent = label;
+
+    const left = document.createElement('button');
+    left.textContent = '◀';
+
+    const val = document.createElement('span');
+    val.textContent = gameSettings[key];
+
+    const right = document.createElement('button');
+    right.textContent = '▶';
+
+    function updateValue(delta) {
+      let idx = values.indexOf(gameSettings[key]);
+      idx = (idx + delta + values.length) % values.length;
+      gameSettings[key] = values[idx];
+      val.textContent = gameSettings[key];
+    }
+
+    left.addEventListener('click', () => updateValue(-1));
+    right.addEventListener('click', () => updateValue(1));
+
+    div.appendChild(lbl);
+    div.appendChild(left);
+    div.appendChild(val);
+    div.appendChild(right);
+    settingsDiv.appendChild(div);
+  }
+
+  // 옵션 추가
+  addToggle('중력 가속', 'gravityAccel');
+  addSelector('초기 중력', 'initGravity', [1,2,3,4,5]);
+  addToggle('미리보기', 'ShowNext');
+  addToggle('홀드', 'ShowHold');
+  addSelector('모드', 'mode', modes);
+
+  settingsContainer.appendChild(settingsDiv);
 }
 
 // 해당 키가 눌려있는지

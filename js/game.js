@@ -2,9 +2,19 @@ const COLS = 10, ROWS = 20;
 
 let arena, bagQueue, nextQueue, current, holdPiece, canHold;
 let piecesPlaced = 0, linesCleared = 0, startTime = 0, TSpin = 0, PerfectClear = 0;
-let gravityTimer = 0, gravityInterval = 1000;
+let gravityTimer = 0;
 let gameOverFlag = false;
 let lastAction = null;
+
+const gravityMap = {
+  1: 1000,
+  2: 500,
+  3: 100,
+  4: 50,
+  5: 10
+};
+
+let gravityInterval = gravityMap[gameSettings["initGravity"]] || 1000;
 
 // 발악 시간
 let lockDelay = 0;
@@ -28,6 +38,7 @@ function tryDelay() {
 // 세팅
 function initGameState() {
   arena = Array.from({length: ROWS}, ()=> Array(COLS).fill(null));
+  gravityInterval = gravityMap[gameSettings["initGravity"]] || 1000;
   bagQueue = [];
   nextQueue = [];
   holdPiece = null;
@@ -124,6 +135,7 @@ function clearLines() {
   }
 
   if (removed) linesCleared += removed;
+  if (gameSettings["mode"] === "스프린트" && linesCleared >= 40) gameOverFlag = true;
 
   
   if (arena.every(row => row.every(cell => cell === null))) {

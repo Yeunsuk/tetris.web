@@ -1,4 +1,3 @@
-
 const mainCanvas = document.getElementById('mainCanvas');
 const mctx = mainCanvas.getContext('2d');
 mctx.imageSmoothingEnabled = false;
@@ -55,13 +54,13 @@ function drawArena() {
       mctx.fillStyle = '#000';
       mctx.fillRect(px, py, CELL, CELL);
 
-      if (color) {
+      if (gameSettings.mode !== "투명" && color) {
         mctx.fillStyle = color;
         mctx.fillRect(px, py, CELL, CELL);
 
         // 블록 테두리
         mctx.strokeStyle = 'rgba(0,0,0,0.35)';
-        mctx.strokeRect(px+1, py+1, CELL-2, CELL-2);
+        mctx.strokeRect(px+1, py+1, CELL-2, CELL-2);        
       }
     }
   }
@@ -96,7 +95,9 @@ function drawCurrentAndGhost() {
   while (!collideArena(current.matrix, current.pos.x, gy+1)) gy++;
   
   // 유령 블록
-  drawMatrixAt(current.matrix, current.pos.x, gy, current.color, 0.28); // 반투명
+  if (gameSettings.mode !== "투명") {
+    drawMatrixAt(current.matrix, current.pos.x, gy, current.color, 0.28); // 반투명
+  }
   // 현재 블록
   drawMatrixAt(current.matrix, current.pos.x, current.pos.y, current.color, 1);
 }
@@ -249,8 +250,26 @@ function handleContinuousAndEdges(dt) {
     rotate_mino(1);
     rotate_mino(1);
   }
-  if (checkEdge('hard')) hardDrop();
+  if (checkEdge('hard')) {
+    hardDrop();
+    if (gameSettings["gravityAccel"] && gravityInterval > 10) gravityInterval--; 
+  }
   if (checkEdge('hold')) hold_mino();
+}
+
+// gameSettings["ShowHold"]에 따라 홀드 패널 보이기/숨기기
+const holdPanel = document.querySelector('#left-panel .panel'); // HOLD 패널 선택
+if (gameSettings["ShowHold"]) {
+  holdPanel.style.display = 'block'; // 보이기
+} else {
+  holdPanel.style.display = 'none';  // 숨기기
+}
+
+const nextPanel = document.querySelector('#right-panel .panel'); // NEXT 패널 선택
+if (gameSettings["ShowNext"]) {
+  nextPanel.style.display = 'block';
+} else {
+  nextPanel.style.display = 'none';
 }
 
 // 메인 루프
@@ -289,13 +308,18 @@ function loop(now) {
     handleContinuousAndEdges(dt);
   }
 
+
+  
   // 화면 그리기
   clearMain();
   drawArena();
   drawGrid();
   drawCurrentAndGhost();
-  drawHoldCanvas();
-  drawNextCanvases();
+
+  holdPanel.style.display = gameSettings["ShowHold"] ? 'block' : 'none';
+  nextPanel.style.display = gameSettings["ShowNext"] ? 'block' : 'none';
+  if (gameSettings["ShowHold"]) drawHoldCanvas();
+  if (gameSettings["ShowNext"]) drawNextCanvases();
   drawStatsDOM();
 
   // 게임 오버

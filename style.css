@@ -1,15 +1,52 @@
-html,body { height:100%; margin:0; background:#000; color:#fff; font-family:Inter,Segoe UI,Roboto,Arial,sans-serif; }
-#app { display:flex; align-items:center; justify-content:center; height:100%; }
+html,body { 
+  height:100%; 
+  margin:0; 
+  background:#000; 
+  color:#fff; 
+  font-family:Inter,Segoe UI,Roboto,Arial,sans-serif; 
+}
 
-.screen { text-align:center; color:#fff; }
+#app { 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
+  height:100%; 
+}
 
-#menu-screen h1 { font-size:48px; margin-bottom:18px; color:#fff; }
-.menu-buttons button { font-size:20px; padding:10px 22px; margin:8px; cursor:pointer; border-radius:6px; border:none; background:#222; color:#fff; }
-.menu-buttons button:hover { background:#333; }
+.screen { 
+  text-align:center; 
+  color:#fff; 
+}
 
-#game-area { display:flex; gap:12px; align-items:flex-start; justify-content:center; }
+/* [메뉴 부분] */
+#menu-screen h1 { 
+  font-size:48px; 
+  margin-bottom:18px; 
+  color:#fff; 
+}
+.menu-buttons button { 
+  font-size:20px; 
+  padding:10px 22px; 
+  margin:8px; 
+  cursor:pointer; 
+  border-radius:6px; 
+  border:none; 
+  background:#222; 
+  color:#fff; 
+}
+.menu-buttons button:hover { 
+  background:#333; 
+}
 
-/* 필드 */
+/* [게임 부분] */
+#game-area { 
+  display:flex; 
+  gap:12px; 
+  align-items:flex-start; 
+  justify-content:center; 
+}
+
+/* 테트리스 필드 */
 #mainCanvas { background:#000; border: 4px solid #333; image-rendering: pixelated;}
 
 /* 좌우 판때기 */
@@ -19,36 +56,129 @@ html,body { height:100%; margin:0; background:#000; color:#fff; font-family:Inte
   gap:10px;
   width:150px;
 }
+
 /* panels */
-.panel { background: #333; padding:8px; border-radius:6px; border:1px solid rgba(255,255,255,0.06); }
-.panel-title { font-weight:700; margin-bottom:6px; font-size:14px; color:#fff; }
+.panel { 
+  background: #333; 
+  padding:8px; 
+  border-radius:6px; 
+  border:1px solid rgba(255,255,255,0.06); 
+}
+.panel-title { 
+  font-weight:700; 
+  margin-bottom:6px; 
+  font-size:14px; 
+  color:#fff; 
+}
 
 /* 미리보기랑 홀드 */
-.nextCanvas, #holdCanvas { background:#000; border:2px solid rgba(160, 148, 148, 0.04); display:block; margin-bottom:6px; }
+.nextCanvas, #holdCanvas { 
+  background:#000; 
+  border:2px solid rgba(160, 148, 148, 0.04); 
+  display:block; margin-bottom:6px; 
+}
 
 /* stats */
 .stats { padding:8px; }
-.stat { display:flex; justify-content:space-between; align-items:center; margin:6px 0; }
+.stat { 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  margin:6px 0; 
+}
 .stat span { opacity:0.8; font-size:12px; }
 .stat div { font-weight:700; }
 
-/* 조작키 */
-#bindings-list { display:flex; flex-direction:column; gap:8px; padding:12px; max-width:480px; margin: 0 auto 12px; }
-.binding { display:flex; justify-content:space-between; align-items:center; padding:8px 12px; border-radius:6px; background:rgba(255,255,255,0.02); cursor:pointer; }
+/* [설정 부분] */
+#config-area { 
+  display:flex; 
+  flex-direction: row;
+  justify-content:center; 
+  align-items:flex-start; 
+  gap:20px; 
+  margin: 20px auto; 
+  max-width: 800px; 
+}
+
+/* 게임 설정 */
+#settings-list { 
+  width:220px; 
+  display:flex; 
+  flex-direction:column; 
+  gap:12px; 
+  padding:12px; 
+  background:rgba(255,255,255,0.02); 
+  border-radius:6px; 
+}
+.setting { 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  background:rgba(255,255,255,0.04);
+  padding:8px; 
+  border-radius:6px; 
+}
+.setting span { 
+  font-weight:700; 
+  margin:0 6px; 
+}
+/* 조작키 설정 */
+#bindings-list { 
+  flex:1; 
+  display:flex; 
+  flex-direction:column; 
+  gap:8px; 
+  padding:12px; 
+  background:rgba(255,255,255,0.02); 
+  border-radius:6px; 
+}
+.binding { 
+  display:flex; 
+  justify-content:space-between; 
+  align-items:center; 
+  padding:8px 12px; 
+  border-radius:6px; 
+  background:rgba(255,255,255,0.02); 
+  cursor:pointer; 
+}
 .binding .act { text-transform:capitalize; }
-.binding .key { font-weight:700; color:#fffa; }
+.binding .key { 
+  font-weight:700; 
+  color:#fffa; 
+}
 
 /* buttons */
-button { background:#222; color:#fff; border:none; border-radius:6px; padding:8px 12px; cursor:pointer; }
+button { 
+  background:#222; 
+  color:#fff; 
+  border:none; 
+  border-radius:6px; 
+  padding:8px 12px; 
+  cursor:pointer; 
+}
 button:hover { background:#333; }
-.hint { opacity:0.6; font-size:12px; margin-top:8px; }
+.hint { 
+  opacity:0.6; 
+  font-size:12px; 
+  margin-top:8px; 
+}
 
 /* 종료 화면 */
 #game-over {
-  position:absolute; left:0; top:0; width:100%; height:100%;
-  display:flex; align-items:center; justify-content:center;
+  position:absolute; 
+  left:0; 
+  top:0; 
+  width:100%; 
+  height:100%;
+  display:flex; 
+  align-items:center; 
+  justify-content:center;
 }
 #game-over .box {
-  background: rgba(0,0,0,0.9); border:2px solid #fff; padding:20px; text-align:center; color:#fff;
+  background: rgba(0,0,0,0.9); 
+  border:2px solid #fff; 
+  padding:20px; 
+  text-align:center; 
+  color:#fff;
   border-radius:8px;
 }
