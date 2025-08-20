@@ -50,7 +50,19 @@ function renderBindings(container) {
   bindingsContainer.innerHTML = '';
   settingsContainer.innerHTML = ''; // 기존 내용 초기화
 
-  const order = ['왼쪽','오른쪽','아래','하드드롭','회전R','회전L','회전180','홀드'];
+  const order = ['left','right','down','hard','rotR','rotL','rot180','hold'];
+
+  // UI용 한글 매핑
+const displayorder = {
+  left: '왼쪽',
+  right: '오른쪽',
+  down: '아래',
+  hard: '하드드롭',
+  rotR: '회전R',
+  rotL: '회전L',
+  rot180: '회전180',
+  hold: '홀드'
+};
 
   // 각 기능에 바인딩 UI 생성
   order.forEach(action => {
@@ -59,7 +71,7 @@ function renderBindings(container) {
     div.className = 'binding';
     const act = document.createElement('div');
     act.className = 'act';
-    act.textContent = action;
+    act.textContent = displayorder[action];
     const key = document.createElement('div');
     key.className = 'key';
 

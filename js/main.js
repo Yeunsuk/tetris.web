@@ -37,3 +37,8 @@
   window.restartGame = restartGame;
   window.spawn_mino = spawn_mino;
 })();
+console.log('bindings:', bindings);
+window.addEventListener('keydown', (e) => {
+  console.log('key down:', e.key, 'pressed:', keysPressed[e.key]);
+});
+console.log('isPressed left:', isPressed('left'));
