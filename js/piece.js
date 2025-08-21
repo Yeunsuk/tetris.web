@@ -107,3 +107,27 @@ const gameSettings = {
 };
 
 const modes = ['기본','스프린트','투명'];
+
+const sounds = {
+  move: new Audio('sound/move.wav'),
+  rot: new Audio('sound/rot.wav'),
+  hard: new Audio('sound/hard.wav'),
+  soft: new Audio('sound/soft.wav'),
+  hold: new Audio('sound/hold.wav')
+};
+
+// 각 사운드 미리 로딩
+for (let key in sounds) {
+  sounds[key].load();
+}
+
+// 재생 함수
+function playSound(name) {
+  const sound = sounds[name];
+  if (sound) {
+    sound.currentTime = 0;
+    sound.play().catch(err => {
+      console.error(`사운드 재생 실패: ${name}`, err);
+    });
+  }
+}

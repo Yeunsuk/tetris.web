@@ -240,7 +240,10 @@ function handleContinuousAndEdges(dt) {
 
   // 소프트 드롭
   if (isPressed('down')) {
-    if (checkEdge('down')) dropOne();
+    if (checkEdge('down')) {
+      playSound('soft');
+      dropOne();
+    }
   }
 
   // 회전 / 하드드롭 / 홀드

@@ -162,6 +162,7 @@ function dropOne(delta) {
 // 하드드롭
 function hardDrop() {
   while (!collideArena(current.matrix, current.pos.x, current.pos.y+1)) current.pos.y++;
+  playSound('hard');
   set_mino();
   clearLines();
   spawn_mino();
@@ -175,6 +176,7 @@ function move_mino(dir) {
   if (collideArena(current.matrix, current.pos.x, current.pos.y)) {
     current.pos.x -= dir;
   } else {
+    playSound('move');
     lastAction = 'move';
     tryDelay();
   }
@@ -201,6 +203,7 @@ function rotate_mino(dir) {
       current.rotationIndex = nextRot;
       current.pos.x = nx;
       current.pos.y = ny;
+      playSound('rot');
       lastAction = 'rotate';
       tryDelay();
       return true;
@@ -213,6 +216,8 @@ function rotate_mino(dir) {
 // 홀드
 function hold_mino() {
   if (!canHold) return;
+  playSound('hold');
+  
   if (!holdPiece) {
     holdPiece = current.type;
     spawn_mino();
